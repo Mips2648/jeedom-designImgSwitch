@@ -25,8 +25,8 @@ class designImgSwitch extends eqLogic {
         log::add(__CLASS__, 'debug', 'pullRefresh started');
 
         $eqLogic = self::byId($_option['id']);
-		if (is_object($eqLogic) && $eqLogic->getIsEnable() == 1) {
-			$eqLogic->refreshPlanHeaderBackground();
+        if (is_object($eqLogic) && $eqLogic->getIsEnable() == 1) {
+            $eqLogic->refreshPlanHeaderBackground();
         }
     }
 
@@ -89,6 +89,18 @@ class designImgSwitch extends eqLogic {
             $cmd->setName('Rafraichir');
             $cmd->setType('action');
             $cmd->setSubType('other');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->save();
+        }
+
+        $cmd = $this->getCmd(null, 'condition');
+        if (!is_object($cmd)) {
+            $cmd = new designImgSwitchCmd();
+            $cmd->setLogicalId('condition');
+            $cmd->setIsVisible(1);
+            $cmd->setName('Condition');
+            $cmd->setType('info');
+            $cmd->setSubType('string');
             $cmd->setEqLogic_id($this->getId());
             $cmd->save();
         }
@@ -162,13 +174,28 @@ class designImgSwitch extends eqLogic {
                 return "rain";
             case '6':
                 return "snow";
-              case '7':
+            case '7':
                 return "mist";
             case '8':
                 return "cloud";
         }
 
         return "default";
+    }
+
+    private static function conditionToHumanReadable($conditionId) {
+        $conditions = array(
+            'default' => 'Défaut',
+            'mist' => 'Brume',
+            'snow' => 'Neige',
+            'cloud' => 'Nuage',
+            'storm' => 'Orage',
+            'rain' => 'Pluie',
+            'sun' => 'Soleil',
+            'wind' => 'Vent'
+        );
+
+        return isset($conditions[$conditionId]) ? __($conditions[$conditionId], __FILE__) : $conditionId;
     }
 
     public static function getPicturePath($period, $condition) {
@@ -289,6 +316,8 @@ class designImgSwitch extends eqLogic {
         }
         log::add(__CLASS__, 'debug', "day / night ? : {$period}");
         log::add(__CLASS__, 'debug', "condition as text : {$condition}");
+
+        $this->checkAndUpdateCmd('condition', designImgSwitch::conditionToHumanReadable($condition));
 
         $picturePath = realpath(__DIR__ . '/../' . designImgSwitch::getPicturePath($period, $condition));
         log::add(__CLASS__, 'debug', "picturePath : {$picturePath}");

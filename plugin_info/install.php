@@ -24,6 +24,14 @@ function designImgSwitch_install() {
 
 function designImgSwitch_update() {
     @rrmdir(__DIR__ . '/../core/images');
+
+    try {
+        foreach (eqLogic::byType('designImgSwitch') as $eqLogic) {
+            $eqLogic->save();
+        }
+    } catch (Exception $e) {
+        log::add('designImgSwitch', 'error', $e->getMessage());
+    }
 }
 
 
