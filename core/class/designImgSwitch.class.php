@@ -67,7 +67,7 @@ class designImgSwitch extends eqLogic {
     }
 
     private function createCron(string $sunid, string $timeHi) {
-        $crons = cron::searchClassAndFunction(__CLASS__, 'pullRefresh', '"sun_id":' . $sunid);
+        $crons = cron::searchClassAndFunction(__CLASS__, 'pullRefresh', '"sun_id":"' . $sunid . '",');
         if (is_array($crons)) {
             foreach ($crons as $cron) {
                 if ($cron->getState() != 'run') {
