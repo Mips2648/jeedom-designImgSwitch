@@ -66,11 +66,20 @@ class designImgSwitch extends eqLogic {
         $listener->save();
     }
 
-    private function createCron(string $timeHi) {
+    private function createCron(string $sunid, string $timeHi) {
+        $crons = cron::searchClassAndFunction(__CLASS__, 'pullRefresh', '"sun_id":' . $sunid);
+        if (is_array($crons)) {
+            foreach ($crons as $cron) {
+                if ($cron->getState() != 'run') {
+                    $cron->remove();
+                }
+            }
+        }
+
         $cron = new cron();
         $cron->setClass(__CLASS__);
         $cron->setFunction('pullRefresh');
-        $cron->setOption(array('id' => $this->getId()));
+        $cron->setOption(array('sun_id' => $sunid, 'id' => $this->getId()));
         $cron->setTimeout(3);
         $cron->setOnce(1);
 
@@ -340,11 +349,11 @@ class designImgSwitch extends eqLogic {
         if ($hour>=$sunrise && $hour < $sunset) {
             $period = "day";
             $this->checkAndUpdateCmd('daytext', __("Jour" , __FILE__));
-            $this->createCron($sunset);
+            $this->createCron('sunset', $sunset);
         } else {
             $period = "night";
             $this->checkAndUpdateCmd('daytext', __("Nuit" , __FILE__));
-            $this->createCron($sunrise);
+            $this->createCron('sunrise', $sunrise);
         }
         log::add(__CLASS__, 'debug', "day / night ? : {$period}");
         log::add(__CLASS__, 'debug', "condition as text : {$condition}");
