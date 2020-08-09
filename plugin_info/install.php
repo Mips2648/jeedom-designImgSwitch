@@ -19,12 +19,10 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function designImgSwitch_install() {
-    @rrmdir(__DIR__ . '/../core/images');
+
 }
 
 function designImgSwitch_update() {
-    @rrmdir(__DIR__ . '/../core/images');
-
     try {
         foreach (eqLogic::byType('designImgSwitch') as $eqLogic) {
             $eqLogic->save();

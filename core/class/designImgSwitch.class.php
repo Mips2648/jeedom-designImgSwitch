@@ -64,8 +64,32 @@ class designImgSwitch extends eqLogic {
         $listener->addEvent($cmd_sunrise->getId());
         $listener->addEvent($cmd_sunset->getId());
         $listener->save();
+    }
 
-        $this->refreshPlanHeaderBackground();
+    private function createCron(string $sunid, string $timeHi) {
+        $crons = cron::searchClassAndFunction(__CLASS__, 'pullRefresh', '"sun_id":"' . $sunid . '",');
+        if (is_array($crons)) {
+            foreach ($crons as $cron) {
+                if ($cron->getState() != 'run') {
+                    $cron->remove();
+                }
+            }
+        }
+
+        $cron = new cron();
+        $cron->setClass(__CLASS__);
+        $cron->setFunction('pullRefresh');
+        $cron->setOption(array('sun_id' => $sunid, 'id' => $this->getId()));
+        $cron->setTimeout(3);
+        $cron->setOnce(1);
+
+        $next = str_repeat('0', 4 - strlen($timeHi)) . $timeHi;
+        $next = date('Y-m-d') . ' ' . substr($next, 0, 2) . ':' . substr($next, 2, 4);
+        $next = strtotime($next);
+
+        $cron->setSchedule(cron::convertDateToCron($next));
+        $cron->setLastRun(date('Y-m-d H:i:s'));
+        $cron->save();
     }
 
     public function preInsert() {
@@ -104,6 +128,18 @@ class designImgSwitch extends eqLogic {
             $cmd->setEqLogic_id($this->getId());
             $cmd->save();
         }
+
+        $cmd = $this->getCmd(null, 'daytext');
+        if (!is_object($cmd)) {
+            $cmd = new designImgSwitchCmd();
+            $cmd->setLogicalId('daytext');
+            $cmd->setIsVisible(1);
+            $cmd->setName('Phase du jour');
+            $cmd->setType('info');
+            $cmd->setSubType('string');
+            $cmd->setEqLogic_id($this->getId());
+            $cmd->save();
+        }
     }
 
     public function preUpdate() {
@@ -115,6 +151,7 @@ class designImgSwitch extends eqLogic {
 
     public function postUpdate() {
         $this->setListener();
+        $this->refreshPlanHeaderBackground();
     }
 
     public function preRemove() {
@@ -311,8 +348,12 @@ class designImgSwitch extends eqLogic {
         $hour = date('Hi');
         if ($hour>=$sunrise && $hour < $sunset) {
             $period = "day";
+            $this->checkAndUpdateCmd('daytext', __("Jour" , __FILE__));
+            $this->createCron('sunset', $sunset);
         } else {
             $period = "night";
+            $this->checkAndUpdateCmd('daytext', __("Nuit" , __FILE__));
+            $this->createCron('sunrise', $sunrise);
         }
         log::add(__CLASS__, 'debug', "day / night ? : {$period}");
         log::add(__CLASS__, 'debug', "condition as text : {$condition}");
