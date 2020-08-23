@@ -8,45 +8,45 @@ $eqLogics = eqLogic::byType($plugin->getId());
 ?>
 
 <div class="row row-overflow">
-    <div class="col-xs-12 eqLogicThumbnailDisplay" style="border-left: solid 1px #EEE; padding-left: 25px;">
+    <div class="col-xs-12 eqLogicThumbnailDisplay">
     <legend><i class="fas fa-cog"></i>  {{Gestion}}</legend>
     <div class="eqLogicThumbnailContainer">
-        <div class="cursor eqLogicAction" data-action="add" style="text-align: center; background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-            <i class="fas fa-plus-circle" style="font-size : 6em;color:#FF7F27;"></i>
+        <div class="cursor eqLogicAction logoSecondary" data-action="add">
+            <i class="fas fa-plus-circle"></i>
             <br>
-            <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#FF7F27">{{Ajouter}}</span>
+            <span>{{Ajouter}}</span>
         </div>
-        <div class="cursor eqLogicAction" data-action="gotoPluginConf" style="text-align: center; background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
-            <i class="fas fa-wrench" style="font-size : 6em;color:#767676;"></i>
+        <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+            <i class="fas fa-wrench"></i>
             <br>
-            <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676">{{Configuration}}</span>
+            <span>{{Configuration}}</span>
         </div>
-        <div class="cursor pluginAction" data-action="openLocation" data-location="<?=$plugin->getDocumentation()?>" style="text-align: center; background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
-            <i class="fas fa-book" style="font-size : 6em;color:#767676;"></i>
+        <div class="cursor pluginAction logoSecondary" data-action="openLocation" data-location="<?=$plugin->getDocumentation()?>">
+            <i class="fas fa-book"></i>
             <br>
-            <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676">{{Documentation}}</span>
+            <span>{{Documentation}}</span>
         </div>
-        <div class="cursor pluginAction" data-action="openLocation" data-location="https://community.jeedom.com/tags/plugin-<?=$plugin->getId()?>" style="text-align: center; background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;">
-            <i class="fas fa-comments" style="font-size : 6em;color:#767676;"></i>
+        <div class="cursor pluginAction logoSecondary" data-action="openLocation" data-location="https://community.jeedom.com/tags/plugin-<?=$plugin->getId()?>">
+            <i class="fas fa-comments"></i>
             <br>
-            <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676">Community</span>
+            <span>Community</span>
         </div>
-        <div class="cursor" id="bt_configImages" style="text-align: center; background-color : #ffffff; height : 120px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;" >
-            <i class="fas fa-images" style="font-size : 6em;color:#767676;"></i>
+        <div class="cursor logoSecondary" id="bt_configImages" >
+            <i class="fas fa-images"></i>
             <br>
-            <span style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;color:#767676">{{Personnalisation}}</span>
+            <span>{{Personnalisation}}</span>
         </div>
     </div>
     <legend><i class="fas fa-table"></i> {{Mes Wallpapers}}</legend>
-    <input class="form-control" placeholder="{{Rechercher}}" style="margin-bottom:4px;" id="in_searchEqlogic" />
+    <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
     <div class="eqLogicThumbnailContainer">
         <?php
         foreach ($eqLogics as $eqLogic) {
-            $opacity = ($eqLogic->getIsEnable()) ? '' : jeedom::getConfiguration('eqLogic:style:noactive');
-            echo '<div class="eqLogicDisplayCard cursor" data-eqLogic_id="' . $eqLogic->getId() . '" style="text-align: center; background-color : #ffffff; height : 200px;margin-bottom : 10px;padding : 5px;border-radius: 2px;width : 160px;margin-left : 10px;' . $opacity . '" >';
-            echo '<img src="' . $eqLogic->getImage() . '" height="105" width="95" />';
+            $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+            echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
+            echo '<img src="' . $eqLogic->getImage() . '"/>';
             echo "<br>";
-            echo '<span class="name" style="font-size : 1.1em;position:relative; top : 15px;word-break: break-all;white-space: pre-wrap;word-wrap: break-word;">' . $eqLogic->getHumanName(true, true) . '</span>';
+            echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
             echo '</div>';
         }
         ?>
