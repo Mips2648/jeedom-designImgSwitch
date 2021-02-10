@@ -5,7 +5,7 @@
 	"utilization" : "Le plugin Météo officiel (weather) doit être installé et configuré.",
 	"licence" : "AGPL",
 	"author" : "Mips",
-	"require" : "4.0.0",
+	"require" : "3.3.24",
 	"category" : "weather",
 	"hasDependency" : false,
 	"hasOwnDeamon" : false,
