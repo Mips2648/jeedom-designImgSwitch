@@ -30,7 +30,6 @@ class designImgSwitch extends eqLogic {
         }
     }
 
-
     /*     * *********************Méthodes d'instance************************* */
 
     private function getListener() {
@@ -96,14 +95,6 @@ class designImgSwitch extends eqLogic {
         $this->setConfiguration('cropImage', 1);
     }
 
-    public function postInsert() {
-
-    }
-
-    public function preSave() {
-
-    }
-
     public function postSave() {
         $cmd = $this->getCmd(null, 'refresh');
         if (!is_object($cmd)) {
@@ -158,10 +149,6 @@ class designImgSwitch extends eqLogic {
         $this->removeListener();
     }
 
-    public function postRemove() {
-
-    }
-
     private function checkConfigurationAndGetCommands(&$cmd_condition = null, &$cmd_sunrise=null, &$cmd_sunset=null) {
         $weatherEqLogicId = $this->getConfiguration('weatherEqLogic');
         if ($weatherEqLogicId == '') {
@@ -194,7 +181,7 @@ class designImgSwitch extends eqLogic {
     private static function ConditionAsText($condition) {
         log::add(__CLASS__, 'debug', "condition: {$condition}");
 
-        if (in_array($condition, array('781', '905', '902', '900', '952', '953', '954', '955', '956', '957', '960', '961'))) {
+        if (in_array($condition, array('771', '781', '905', '902', '900', '952', '953', '954', '955', '956', '957', '960', '961'))) {
             return "wind";
         } else if (in_array($condition, array('800', '951'))) {
             return "sun";
@@ -262,6 +249,10 @@ class designImgSwitch extends eqLogic {
 
     private function AdaptAndSaveImgForPlan($sourceFile, $planId) {
         $planHeader = planHeader::byId($planId);
+        if (!is_object($planHeader)) {
+            log::add(__CLASS__, 'warning', "Aucun design trouvé pour l'ID:{$planId}");
+            return;
+        }
         log::add(__CLASS__, 'info', sprintf(__("Mise à jour de l'image du design %s-%s avec %s" , __FILE__), $planId, $planHeader->getName(), $sourceFile));
 
         if ($this->getConfiguration('cropImage', 1)==0) {
