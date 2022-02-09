@@ -20,7 +20,7 @@
  */
 function addCmdToTable(_cmd) {
     if (!isset(_cmd)) {
-        var _cmd = {configuration: {}};
+        var _cmd = { configuration: {} };
     }
     if (!isset(_cmd.configuration)) {
         _cmd.configuration = {};
@@ -63,7 +63,6 @@ function addCmdToTable(_cmd) {
         tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
         tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
     }
-    tr += '<i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
     tr += '</td>';
     tr += '</tr>';
     $('#table_cmd tbody').append(tr);
@@ -74,13 +73,28 @@ function addCmdToTable(_cmd) {
     jeedom.cmd.changeType($('#table_cmd tbody tr:last'), init(_cmd.subType));
 }
 
-$("#table_cmd").sortable({axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true});
+$("#table_cmd").sortable({ axis: "y", cursor: "move", items: ".cmd", placeholder: "ui-state-highlight", tolerance: "intersect", forcePlaceholderSize: true });
 
-$('.pluginAction[data-action=openLocation]').on('click',function(){
+$('.pluginAction[data-action=openLocation]').on('click', function () {
     window.open($(this).attr("data-location"), "_blank", null);
 });
 
 $('#bt_configImages').on('click', function () {
-    $('#md_modal').dialog({title: "{{Config Images}}"});
+    $('#md_modal').dialog({ title: "{{Config Images}}" });
     $('#md_modal').load('index.php?v=d&plugin=designImgSwitch&modal=config').dialog('open');
+});
+
+$(".listCmdInfo").on('click', function () {
+    var el = $(this).closest('div').find('.eqLogicAttr[data-l1key=configuration]');
+    jeedom.cmd.getSelectModal({ cmd: { type: 'info' } }, function (result) {
+        el.atCaret('insert', result.human);
+    });
+});
+
+$('.eqLogicAttr[data-l1key=configuration][data-l2key=weatherEqLogic]').on('change', function () {
+    if ($(this).value() == 'manual') {
+        $('.weather-manuel-config').show();
+    } else {
+        $('.weather-manuel-config').hide();
+    }
 });
