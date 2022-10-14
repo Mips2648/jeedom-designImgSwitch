@@ -226,11 +226,17 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     <table id="table_cmd" class="table table-bordered table-condensed">
                         <thead>
                             <tr>
-                                <th>{{Nom}}</th>
-                                <th></th>
-                                <th>{{Paramètres}}</th>
-                                <th>{{Options}}</th>
-                                <th>{{Actions}}</th>
+                                <th style="min-width:220px;width:350px;">{{Nom}}</th>
+                                <th style="min-width:140px;width:200px;">{{Type}}</th>
+                                <th style="min-width:260px;">{{Options}}</th>
+                                <?php
+                                if (version_compare(jeedom::version(), '4.3.0', '>=')) {
+                                ?>
+                                    <th>{{Etat}}</th>
+                                <?php
+                                }
+                                ?>
+                                <th style="min-width:80px;width:140px;">{{Actions}}</th>
                             </tr>
                         </thead>
                         <tbody>
