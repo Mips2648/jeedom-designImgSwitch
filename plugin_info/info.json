@@ -5,13 +5,15 @@
 	"utilization": "Le plugin Météo officiel (weather) doit être installé et configuré.",
 	"licence": "AGPL",
 	"author": "Mips",
-	"require": "4.0",
+	"require": "4.2",
 	"category": "weather",
 	"hasDependency": false,
 	"hasOwnDeamon": false,
 	"maxDependancyInstallTime": 0,
 	"changelog": "https://mips2648.github.io/jeedom-plugins-docs/designImgSwitch/#language#/changelog",
 	"documentation": "https://mips2648.github.io/jeedom-plugins-docs/designImgSwitch/#language#/",
+	"changelog_beta": "https://mips2648.github.io/jeedom-plugins-docs/designImgSwitch/#language#/changelog",
+	"documentation_beta": "https://mips2648.github.io/jeedom-plugins-docs/designImgSwitch/#language#/",
 	"link": {
 		"forum": "https://community.jeedom.com/tags/plugin-designimgswitch",
 		"video": ""
