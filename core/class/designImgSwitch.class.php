@@ -134,7 +134,7 @@ class designImgSwitch extends eqLogic {
         $this->setConfiguration('cropImage', 1);
     }
 
-    public function postSave() {
+    public function postInsert() {
         $cmd = $this->getCmd(null, 'refresh');
         if (!is_object($cmd)) {
             $cmd = new designImgSwitchCmd();
@@ -432,7 +432,9 @@ class designImgSwitchCmd extends cmd {
 
     public function execute($_options = array()) {
         if ($this->getLogicalId() == 'refresh') {
-            $this->getEqLogic()->refreshPlanHeaderBackground();
+            /** @var designImgSwitch */
+            $eqLogic = $this->getEqLogic();
+            $eqLogic->refreshPlanHeaderBackground();
         }
     }
 }
