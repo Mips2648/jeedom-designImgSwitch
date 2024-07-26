@@ -144,20 +144,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-3 control-label">{{Equipement météo}}</label>
-                                <div class="col-sm-3">
-                                    <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="weatherEqLogic">
-                                        <option value="manual">{{Configuration manuellle}}</option>
-                                        <?php
-                                        /** @var eqLogic */
-                                        foreach (eqLogic::bytype('weather', true) as $eqLogic) {
-                                            echo '<option value="' . $eqLogic->getId() . '">' . $eqLogic->getName() . '</option>';
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <label class="col-sm-3 control-label help" data-help="{{Après un changement d'image de fond, forcer le rafraichissement et aller sur le design sélectionné}}">{{Aller au design}}</label>
                                 <div class="col-sm-3">
                                     <select class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="gotoDesign">
@@ -176,9 +162,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                     <label class="checkbox-inline"><input type="checkbox" class="eqLogicAttr" data-l1key="configuration" data-l2key="cropImage" checked />{{Activer}}</label>
                                 </div>
                             </div>
-                            <div class="weather-manuel-config">
-                                <legend><i class="fas fa-cogs"></i> {{Configuration manuelle}}</legend>
-
+                            <div>
                                 <?php
                                 $configs = array('sunrise' => 'Levé du soleil', 'sunset' => 'Couché du soleil');
                                 foreach ($configs as $key => $desc) {

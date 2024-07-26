@@ -64,7 +64,7 @@ class designImgSwitch extends eqLogic {
             return;
         }
 
-        $this->checkConfigurationAndGetCommands($cmd_condition, $cmd_sunrise, $cmd_sunset);
+        $this->checkConfigurationAndGetCommands($cmd_sunrise, $cmd_sunset);
 
         $listener = $this->getListener();
         if (!is_object($listener)) {
@@ -74,31 +74,29 @@ class designImgSwitch extends eqLogic {
             $listener->setOption(array('id' => $this->getId()));
         }
         $listener->emptyEvent();
-        if (is_object($cmd_condition)) {
-            $listener->addEvent($cmd_condition->getId());
-        } else {
-            foreach (self::$_weatherConditions as $key => $desc) {
-                if ($key == 'default') continue;
-                $condition = $this->getConfiguration("manual_{$key}");
-                if ($condition == '') continue;
 
-                $pregResult = preg_match_all("/#([0-9]*)#/", $condition, $matches);
-                if ($pregResult === false) {
-                    log::add(__CLASS__, 'error', __('Erreur lors du parsing de la condition: ', __FILE__) . $condition);
-                    continue;
-                }
-                if ($pregResult < 1) {
-                    log::add(__CLASS__, 'debug', 'no command in condition');
-                    continue;
-                }
-                foreach ($matches[1] as $cmd_id) {
-                    if (!is_numeric($cmd_id)) continue;
-                    $cmd = cmd::byId($cmd_id);
-                    if (!is_object($cmd)) continue;
-                    $listener->addEvent($cmd->getId());
-                }
+        foreach (self::$_weatherConditions as $key => $desc) {
+            if ($key == 'default') continue;
+            $condition = $this->getConfiguration("manual_{$key}");
+            if ($condition == '') continue;
+
+            $pregResult = preg_match_all("/#([0-9]*)#/", $condition, $matches);
+            if ($pregResult === false) {
+                log::add(__CLASS__, 'error', __('Erreur lors du parsing de la condition: ', __FILE__) . $condition);
+                continue;
+            }
+            if ($pregResult < 1) {
+                log::add(__CLASS__, 'debug', 'no command in condition');
+                continue;
+            }
+            foreach ($matches[1] as $cmd_id) {
+                if (!is_numeric($cmd_id)) continue;
+                $cmd = cmd::byId($cmd_id);
+                if (!is_object($cmd)) continue;
+                $listener->addEvent($cmd->getId());
             }
         }
+
         $listener->addEvent($cmd_sunrise->getId());
         $listener->addEvent($cmd_sunset->getId());
         $listener->save();
@@ -188,24 +186,11 @@ class designImgSwitch extends eqLogic {
         $this->removeListener();
     }
 
-    private function checkConfigurationAndGetCommands(&$cmd_condition = null, &$cmd_sunrise = null, &$cmd_sunset = null) {
+    private function checkConfigurationAndGetCommands(&$cmd_sunrise = null, &$cmd_sunset = null) {
 
-        $weatherEqLogicId = $this->getConfiguration('weatherEqLogic');
-        if ($weatherEqLogicId == '') {
-            throw new Exception(__("Veuillez configurer l'équipement météo à utiliser", __FILE__));
-        }
-        if ($weatherEqLogicId == 'manual') {
-            $cmd_condition = 'manual';
-            $cmd_sunrise = cmd::byId(str_replace('#', '', $this->getConfiguration('manual_sunrise')));
-            $cmd_sunset = cmd::byId(str_replace('#', '', $this->getConfiguration('manual_sunset')));
-        } else {
-            $cmd_condition = cmd::byEqLogicIdAndLogicalId($weatherEqLogicId, 'condition_id');
-            if (!is_object($cmd_condition)) {
-                throw new Exception(__("La commande 'Numéro condition' (condition_id) de l'équipement Météo (weather) est introuvable, veuillez vérifier la configuration.", __FILE__));
-            }
-            $cmd_sunrise = cmd::byEqLogicIdAndLogicalId($weatherEqLogicId, 'sunrise');
-            $cmd_sunset = cmd::byEqLogicIdAndLogicalId($weatherEqLogicId, 'sunset');
-        }
+        $cmd_sunrise = cmd::byId(str_replace('#', '', $this->getConfiguration('manual_sunrise')));
+        $cmd_sunset = cmd::byId(str_replace('#', '', $this->getConfiguration('manual_sunset')));
+
         if (!is_object($cmd_sunrise)) {
             throw new Exception(__("La commande 'Lever du soleil' est introuvable, veuillez vérifier la configuration.", __FILE__));
         }
@@ -224,20 +209,16 @@ class designImgSwitch extends eqLogic {
         return $planHeaders;
     }
 
-    private function getCurrentWeatherCondition($condition) {
-        if (is_object($condition)) {
-            return designImgSwitch::evaluateWeatherCondition($condition->execCmd());
-        } else {
-            foreach (self::$_weatherConditions as $key => $desc) {
-                if ($key == 'default') continue;
+    private function getCurrentWeatherCondition() {
+        foreach (self::$_weatherConditions as $key => $desc) {
+            if ($key == 'default') continue;
 
-                if (jeedom::evaluateExpression($this->getConfiguration("manual_{$key}"))) {
-                    return $key;
-                }
-                log::add(__CLASS__, 'debug', "Condition for {$key} is false");
+            if (jeedom::evaluateExpression($this->getConfiguration("manual_{$key}"))) {
+                return $key;
             }
-            return "default";
+            log::add(__CLASS__, 'debug', "Condition for {$key} is false");
         }
+        return "default";
     }
 
     private static function evaluateWeatherCondition($condition) {
@@ -375,7 +356,7 @@ class designImgSwitch extends eqLogic {
     }
 
     public function refreshPlanHeaderBackground() {
-        $this->checkConfigurationAndGetCommands($cmd_condition, $cmd_sunrise, $cmd_sunset);
+        $this->checkConfigurationAndGetCommands($cmd_sunrise, $cmd_sunset);
 
         $planHeaders = $this->getPlanHeaders();
         if (!is_array($planHeaders) || count($planHeaders) == 0) {
@@ -383,7 +364,7 @@ class designImgSwitch extends eqLogic {
             return;
         }
 
-        $condition = $this->getCurrentWeatherCondition($cmd_condition);
+        $condition = $this->getCurrentWeatherCondition();
         $sunrise = $cmd_sunrise->execCmd();
         $sunset = $cmd_sunset->execCmd();
 
