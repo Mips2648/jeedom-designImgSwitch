@@ -12,3 +12,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: Mips2648/plugins-translations@v0.26
+        with:
+          deepl_api_key: ${{ secrets.DEEPL_API_KEY }}
