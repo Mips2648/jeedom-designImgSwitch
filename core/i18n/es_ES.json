@@ -9,12 +9,15 @@
     "plugins\/designImgSwitch\/core\/class\/designImgSwitch.class.php": {
         "Aucun design sélectionné.": "No se ha seleccionado ningún diseño.",
         "Changement design : ": "Cambio de diseño :",
+        "Condition": "Condición",
         "Erreur lors du parsing de la condition: ": "Error al analizar la condición:",
         "Jour": "Día",
         "La commande 'Coucher du soleil' est introuvable, veuillez vérifier la configuration.": "No se encuentra el comando 'Sunset'. Por favor, compruebe la configuración.",
         "La commande 'Lever du soleil' est introuvable, veuillez vérifier la configuration.": "No se encuentra el comando 'Sunrise'. Por favor, compruebe la configuración.",
         "Mise à jour de l'image du design %s-%s avec %s": "Actualizar imagen de diseño %s-%s con %s",
         "Nuit": "Noche",
+        "Phase du jour": "Fase del día",
+        "Rafraichir": "Refrescar",
         "Suppression des images précédentes pour le design %s": "Eliminación de imágenes anteriores para el diseño %s"
     },
     "plugins\/designImgSwitch\/desktop\/js\/designImgSwitch.js": {
