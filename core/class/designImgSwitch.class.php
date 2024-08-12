@@ -138,7 +138,7 @@ class designImgSwitch extends eqLogic {
             $cmd = new designImgSwitchCmd();
             $cmd->setLogicalId('refresh');
             $cmd->setIsVisible(1);
-            $cmd->setName('{{Rafraichir}}');
+            $cmd->setName(__('Rafraichir', __FILE__));
             $cmd->setType('action');
             $cmd->setSubType('other');
             $cmd->setEqLogic_id($this->getId());
@@ -150,7 +150,7 @@ class designImgSwitch extends eqLogic {
             $cmd = new designImgSwitchCmd();
             $cmd->setLogicalId('condition');
             $cmd->setIsVisible(1);
-            $cmd->setName('{{Condition}}');
+            $cmd->setName(__('Condition', __FILE__));
             $cmd->setType('info');
             $cmd->setSubType('string');
             $cmd->setEqLogic_id($this->getId());
@@ -162,7 +162,7 @@ class designImgSwitch extends eqLogic {
             $cmd = new designImgSwitchCmd();
             $cmd->setLogicalId('daytext');
             $cmd->setIsVisible(1);
-            $cmd->setName('{{Phase du jour}}');
+            $cmd->setName(__('Phase du jour', __FILE__));
             $cmd->setType('info');
             $cmd->setSubType('string');
             $cmd->setEqLogic_id($this->getId());
