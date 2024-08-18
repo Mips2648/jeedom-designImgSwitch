@@ -5,7 +5,9 @@
 		"fr_FR": "Plugin permettant de changer automatiquement l'image de fond de vos design en fonction de la météo.",
 		"en_US": "Plugin that automatically changes the background image of your designs according to the weather.",
 		"es_ES": "Plugin que cambia automáticamente la imagen de fondo de tus diseños en función del tiempo.",
-		"de_DE": "Plugin, mit dem Sie das Hintergrundbild Ihrer Designs je nach Wetterlage automatisch ändern können."
+		"de_DE": "Plugin, mit dem Sie das Hintergrundbild Ihrer Designs je nach Wetterlage automatisch ändern können.",
+		"it_IT": "Plugin che cambia automaticamente l'immagine di sfondo dei vostri progetti in base al meteo.",
+		"pt_PT": "Plugin que altera automaticamente a imagem de fundo dos seus desenhos de acordo com a meteorologia."
 	},
 	"licence": "AGPL",
 	"author": "Mips",
@@ -26,7 +28,9 @@
 		"de_DE",
 		"en_US",
 		"es_ES",
-		"fr_FR"
+		"fr_FR",
+		"it_IT",
+		"pt_PT"
 	],
 	"compatibility": [
 		"smart",
