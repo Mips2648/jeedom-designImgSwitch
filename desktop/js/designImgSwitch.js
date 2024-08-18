@@ -93,11 +93,3 @@ $(".listCmdInfo").on('click', function () {
         el.atCaret('insert', result.human);
     });
 });
-
-$('.eqLogicAttr[data-l1key=configuration][data-l2key=weatherEqLogic]').on('change', function () {
-    if ($(this).value() == 'manual') {
-        $('.weather-manuel-config').show();
-    } else {
-        $('.weather-manuel-config').hide();
-    }
-});

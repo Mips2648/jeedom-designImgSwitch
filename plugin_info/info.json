@@ -1,11 +1,15 @@
 {
 	"id": "designImgSwitch",
 	"name": "Design Image",
-	"description": "Plugin permettant de changer automatiquement l'image de fond de vos design en fonction de la météo.",
-	"utilization": "Le plugin Météo officiel (weather) doit être installé et configuré.",
+	"description": {
+		"fr_FR": "Plugin permettant de changer automatiquement l'image de fond de vos design en fonction de la météo.",
+		"en_US": "Plugin that automatically changes the background image of your designs according to the weather.",
+		"es_ES": "Plugin que cambia automáticamente la imagen de fondo de tus diseños en función del tiempo.",
+		"de_DE": "Plugin, mit dem Sie das Hintergrundbild Ihrer Designs je nach Wetterlage automatisch ändern können."
+	},
 	"licence": "AGPL",
 	"author": "Mips",
-	"require": "4.2",
+	"require": "4.3",
 	"category": "weather",
 	"hasDependency": false,
 	"hasOwnDeamon": false,
@@ -19,9 +23,10 @@
 		"video": ""
 	},
 	"language": [
-		"fr_FR",
+		"de_DE",
 		"en_US",
-		"de_DE"
+		"es_ES",
+		"fr_FR"
 	],
 	"compatibility": [
 		"smart",
