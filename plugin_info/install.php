@@ -19,7 +19,6 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 function designImgSwitch_install() {
-
 }
 
 function designImgSwitch_update() {
@@ -34,7 +33,4 @@ function designImgSwitch_update() {
 
 
 function designImgSwitch_remove() {
-
 }
-
-?>
