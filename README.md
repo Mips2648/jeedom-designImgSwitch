@@ -1,5 +1,7 @@
 # jeedom-designImgSwitch
 
+[![CI](https://github.com/mips2648/jeedom-designImgSwitch/actions/workflows/ci.yml/badge.svg)](https://github.com/mips2648/jeedom-designImgSwitch/actions/workflows/ci.yml)
+
 Plugin Jeedom to change design wallpaper automatically depending conditions
 
 Documentation: <https://mips2648.github.io/jeedom-plugins-docs/designImgSwitch>
