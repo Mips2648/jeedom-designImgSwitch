@@ -11,7 +11,7 @@
 	},
 	"licence": "AGPL",
 	"author": "Mips",
-	"require": "4.3",
+	"require": "4.5",
 	"category": "weather",
 	"hasDependency": false,
 	"hasOwnDeamon": false,

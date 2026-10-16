@@ -411,11 +411,13 @@ class designImgSwitchCmd extends cmd {
         return true;
     }
 
-    public function execute($_options = array()) {
+    public function execute($_options = array()): bool {
         if ($this->getLogicalId() == 'refresh') {
             /** @var designImgSwitch */
             $eqLogic = $this->getEqLogic();
             $eqLogic->refreshPlanHeaderBackground();
+            return true;
         }
+        return false;
     }
 }
